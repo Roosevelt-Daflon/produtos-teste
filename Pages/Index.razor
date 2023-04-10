@@ -1,0 +1,49 @@
+﻿@page "/"
+@using produtos_teste.Model;
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Index</PageTitle>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Preço</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var i in produtos)
+        {
+            <tr @onclick="() => Delete(produtos.IndexOf(i))">
+                <th scope="row">@i.Id</th>
+                <td>@i.Nome</td>
+                <td>@i.Price</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code
+{
+    List<Produto> produtos = new List<Produto>()
+    {
+        new Produto()
+        {
+            Id = 1,
+            Nome = "Carro",
+            Price = 100.20m
+        },
+        new Produto()
+        {
+            Id = 2,
+            Nome = "Carro 2",
+            Price = 200.20m
+        }
+    };
+
+    async void Delete(int i)
+    {
+        await JsRuntime.InvokeVoidAsync("alert", "id: "+i);
+    }
+}
